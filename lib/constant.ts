@@ -1,0 +1,50 @@
+export const events = [
+    {
+        title: "Google I/O 2024",
+        image: "/images/event1.png",
+        slug: "google-io-2024",
+        location: "Mountain View, CA",
+        date: "May 14, 2024",
+        time: "10:00 AM PST",
+    },
+    {
+        title: "Apple WWDC24",
+        image: "/images/event2.png",
+        slug: "apple-wwdc-24",
+        location: "Cupertino, CA",
+        date: "June 10, 2024",
+        time: "10:00 AM PDT",
+    },
+    {
+        title: "React Conf 2024",
+        image: "/images/event3.png",
+        slug: "react-conf-2024",
+        location: "Henderson, NV",
+        date: "May 15, 2024",
+        time: "9:00 AM PDT",
+    },
+    {
+        title: "Next.js Conf 2024",
+        image: "/images/event4.png",
+        slug: "nextjs-conf-2024",
+        location: "San Francisco, CA",
+        date: "October 24, 2024",
+        time: "9:00 AM PST",
+    },
+    {
+        title: "AWS re:Invent 2024",
+        image: "/images/event5.png",
+        slug: "aws-reinvent-2024",
+        location: "Las Vegas, NV",
+        date: "December 2, 2024",
+        time: "8:00 AM PST",
+    },
+    {
+        title: "Microsoft Build 2024",
+        image: "/images/event6.png",
+        slug: "microsoft-build-2024",
+        location: "Seattle, WA",
+        date: "May 21, 2024",
+        time: "8:30 AM PDT",
+    }
+];
