@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils";
 import LightRays from '@/components/LightRays';
 import React from "react";
 import Navbar from "@/components/Navbar";
-import { PostHogProvider } from "@/components/PostHogProvider";
+import { PostHogProvider} from "@/providers/PostHogProvider";
+import { SessionProvider } from '@/providers/SessionProvider'
 
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -21,8 +22,8 @@ const martianMono = Martian_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dev Event",
-  description: "The Hub for Every Dev Event You Mustn't miss",
+  title: "LunchQueue – Launch your next big idea",
+  description: "Create viral waitlists in minutes",
 };
 
 export default function RootLayout({
@@ -36,6 +37,7 @@ export default function RootLayout({
       <body
           className={cn("min-h-screen", "antialiased", christenedGrotesk.variable, martianMono.variable, "font-sans", geist.variable)}>
       <PostHogProvider>
+      <SessionProvider>
       <Navbar />
       <div className={'absolute z-[-1] min-h-screen inset-0 top-0'} >
         <LightRays
@@ -57,6 +59,7 @@ export default function RootLayout({
         <main >
       {children}
         </main>
+      </SessionProvider>
       </PostHogProvider>
       </body>
     </html>

@@ -1,13 +1,79 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
+// prisma/schema.prisma
 generator client {
-  provider = "prisma-client"
-  output   = "../lib/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// User who signs up via GitHub
+model User {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  email     String     @unique
+  image     String?
+  // Relations
+  accounts  Account[]
+  sessions  Session[]
+  waitlists Waitlist[]
+
+  createdAt DateTime   @default(now())
+}
+
+// NextAuth account (links GitHub to user)
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+// Session (for database session strategy)
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Waitlist created by a user
+model Waitlist {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  slug        String   @unique
+  userId      String   @db.ObjectId
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  signups     Signup[]
+
+  createdAt   DateTime @default(now())
+}
+
+// Signup for a waitlist
+model Signup {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  email        String
+  waitlistId   String   @db.ObjectId
+  waitlist     Waitlist @relation(fields: [waitlistId], references: [id], onDelete: Cascade)
+  referralCode String?
+  referredBy   String?
+  position     Int
+
+  createdAt    DateTime @default(now())
+
+  @@unique([email, waitlistId])
 }
